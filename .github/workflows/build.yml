@@ -1,0 +1,39 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: 
+      - 'main'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy: 
+      matrix: 
+        include: 
+          - image: pracharya2601/fullstack-express-backend
+            dockerfile: server/Dockerfile
+          - image: pracharya2601/fullstack-cra
+            dockerfile: client/Dockerfile
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Login to docker
+      uses: docker/login-action@v2
+      with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/build-push-action@v4
+      with:
+        images: ${{ matrix.image }}
+    - name: Build And Push
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ${{ matrix.dockerfile }}
+        push: true
+        taga: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+    
