@@ -1,7 +1,6 @@
 FROM node:16-alpine AS deps
 WORKDIR /app
 COPY package.json /app
-COPY yarn.lock /app
 RUN yarn install
 
 FROM node:16-alpine AS build
