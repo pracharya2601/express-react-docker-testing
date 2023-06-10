@@ -8,15 +8,13 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    # strategy:
-    #   matrix:
-    #     include:
-    #       - image: pracharya2601/fullstack-express-backend
-    #         dockerfile: ./server/Dockerfile
-    #         dockerfilepath: /server
-    #       - image: pracharya2601/fullstack-cra
-    #         dockerfile: ./client/Dockerfile
-    #         dockerfilepath: /client
+    strategy:
+      matrix:
+        include:
+          - image: pracharya2601/fullstack-express-backend
+            dockerfile: ./server/Dockerfile
+          - image: pracharya2601/fullstack-cra
+            dockerfile: ./client/Dockerfile
     steps:
       - uses: actions/checkout@v3
 
