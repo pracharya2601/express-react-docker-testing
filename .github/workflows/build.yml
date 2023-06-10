@@ -8,15 +8,15 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - image: pracharya2601/fullstack-express-backend
-            dockerfile: server/Dockerfile
-            dockerfilepath: /server
-          - image: pracharya2601/fullstack-cra
-            dockerfile: client/Dockerfile
-            dockerfilepath: /client
+    # strategy:
+    #   matrix:
+    #     include:
+    #       - image: pracharya2601/fullstack-express-backend
+    #         dockerfile: ./server/Dockerfile
+    #         dockerfilepath: /server
+    #       - image: pracharya2601/fullstack-cra
+    #         dockerfile: ./client/Dockerfile
+    #         dockerfilepath: /client
     steps:
       - uses: actions/checkout@v3
 
@@ -33,7 +33,7 @@ jobs:
       - name: Build And Push
         uses: docker/build-push-action@v4
         with:
-          context: ${{ matrix.dockerfilepath }}
+          context: .
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
