@@ -12,9 +12,9 @@ jobs:
       matrix: 
         include: 
           - image: pracharya2601/fullstack-express-backend
-            dockerfile: server/Dockerfile
+            dockerfile: /server/Dockerfile
           - image: pracharya2601/fullstack-cra
-            dockerfile: client/Dockerfile
+            dockerfile: /client/Dockerfile
     steps:
     - uses: actions/checkout@v3
     
